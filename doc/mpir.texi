@@ -1455,7 +1455,7 @@ version of Visual Studio in use as follows:
 @end example
 
 The parameter <SDK> is optional and is the version number of the Windows SDK
-for which the builds will be taargetted (e.g. 10.0.16299.0).  This program,
+for which the builds will be targetted (e.g. 10.0.16299.0).  This program,
 which has to be run before Visual Studio, provides a list of all the assembler
 optimised versions of MPIR that are available.  Any number of versions can be
 chosen and these builds will then be available when Visual Studio is subsequently
