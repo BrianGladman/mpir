@@ -27,7 +27,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="mpir_config.py" />
-    <Compile Include="version_info19.py" />
+    <Compile Include="version_info26.py" />
     <Compile Include="_msvc_filters.py" />
     <Compile Include="_msvc_project.py" />
     <Compile Include="_msvc_solution.py" />

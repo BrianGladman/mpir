@@ -7,11 +7,11 @@
 #   vcx project tools version
 #   windows SDK version
 vs_info = { 'solution':'12',
-            'visual studio':'19',
+            'visual studio':'26',
             'msvc':'19',
-            'msvc_long':'19.20.27027.1',
-            'vcx_tool':'15.0.25914.0',
-            'platform_toolset':'142',
+            'msvc_long':'19.30.30401',
+            'vcx_tool':'19.30.30401',
+            'platform_toolset':'145',
             'windows_sdk':'10.0'              # Windows 10 (latest installed)
             # 'windows_sdk':'10.0.17763.0'    # Windows 10 version 1809
             # 'windows_sdk':'10.0.17134.0'    # Windows 10 version 1803

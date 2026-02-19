@@ -36,7 +36,7 @@ def write_f(ipath, opath):
       pass
     copy(ipath, opath)
 
-vs_version = 22
+vs_version = 26
 if len(argv) > 1:
   vs_version = int(argv[1])
 
