@@ -1,6 +1,6 @@
 @echo off
 rem %1 = full target path
-rem %2 = last two digits of the Visual Studio version number (e.g. 17)
+rem %2 = last two digits of the Visual Studio version number (e.g. 17 or 22)
 
 set vs_ver=%2
 set str=%~1
@@ -20,11 +20,13 @@ goto dele
 set str=%str_confirmed%
 echo "Final subpath %str%"
 
-rem we now have: msvc.\vs<nn>\<project_directory>\<win32|x64>\<debug|release>\mpir.<lib|dll>
-rem extract: project_directory, platform (plat=<win32|x64>), configuration (conf=<debug|release>) and file name
+rem we now have: msvc\vs<nn>\<project>\<plat>\<conf>\mpir(.xx).<lib|dll>
+rem extract: project_directory, platform (plat), configuration (conf) and file name
 
 set file=
-for /f "tokens=1,2,3,4,5,6 delims=\" %%a in ("%str%") do set tloc=%%c&set plat=%%d&set conf=%%e&set file=%%f
+for /f "tokens=1,2,3,4,5,6 delims=\" %%a in ("%str%") do (
+    set tloc=%%c&set plat=%%d&set conf=%%e&set file=%%f
+)
 if /i "%file%" NEQ "" (goto next)
 call :seterr & echo ERROR: %1 is not supported & exit /b %errorlevel%
 
@@ -42,9 +44,9 @@ call :seterr & echo "postbuild copy error ERROR: target=%tloc%, plat=%plat%, con
 
 :is2nd:
 rem set the target and final binary output directories
-set tgt_dir="vs%vs_ver%\%loc%%plat%\%conf%\"
-set bin_dir="..\%extn%\%plat%\%conf%\"
-set hdr_dir="..\%extn%\%plat%\%conf%\"
+set "tgt_dir=vs%vs_ver%\%loc%%plat%\%conf%"
+set "bin_dir=..\%extn%\%plat%\%conf%"
+set "hdr_dir=..\%extn%\%plat%\%conf%"
 
 rem output parametrers for the MPIR tests
 if /i "%filename%" EQU "mpirxx" goto skip
@@ -66,43 +68,42 @@ rem %1 = target (build output) directory
 rem %2 = binary destination directory
 rem %3 = configuration (debug/release)
 rem %4 = library (lib/dll)
-rem %5 = file name
+rem %5 = file name (mpir | mpirxx)
 :copyb
 if "%4" EQU "dll" (
-	copy %1mpir.dll %2mpir.dll > nul 2>&1
-	copy %1mpir.exp %2mpir.exp > nul 2>&1
-	copy %1mpir.lib %2mpir.lib > nul 2>&1
-	if exist %1mpir.pdb (copy %1mpir.pdb %2mpir.pdb  > nul 2>&1)
+    copy "%~1\mpir.dll" "%~2\mpir.dll" > nul 2>&1
+    copy "%~1\mpir.exp" "%~2\mpir.exp" > nul 2>&1
+    copy "%~1\mpir.lib" "%~2\mpir.lib" > nul 2>&1
+    if exist "%~1\mpir.pdb" copy "%~1\mpir.pdb" "%~2\mpir.pdb" > nul 2>&1
 ) else if "%4" EQU "lib" (
     if "%5" EQU "mpir" (
-  	    if exist %1mpir.lib (
-        copy %1mpir.lib %2mpir.lib > nul 2>&1
-	    if exist %1mpir.pdb (copy %1mpir.pdb %2mpir.pdb > nul 2>&1)
+        if exist "%~1\mpir.lib" (
+            copy "%~1\mpir.lib" "%~2\mpir.lib" > nul 2>&1
+            if exist "%~1\mpir.pdb" copy "%~1\mpir.pdb" "%~2\mpir.pdb" > nul 2>&1
+        ) else (
+            echo "Not Found MPIR at location" "%~1\mpir.lib"
         )
     ) else if "%5" EQU "mpirxx" (
-	    if exist %1mpirxx.lib (
-        copy %1mpirxx.lib %2mpirxx.lib > nul 2>&1
-	    if exist %1mpirxx.pdb (copy %1mpirxx.pdb %2mpirxx.pdb > nul 2>&1)
+        if exist "%~1\mpirxx.lib" (
+            copy "%~1\mpirxx.lib" "%~2\mpirxx.lib" > nul 2>&1
+            if exist "%~1\mpirxx.pdb" copy "%~1\mpirxx.pdb" "%~2\mpirxx.pdb" > nul 2>&1
         )
     )
 ) else (
-	call :seterr & echo ERROR: illegal library type %4  & exit /b %errorlevel%
+    call :seterr & echo ERROR: illegal library type %4 & exit /b %errorlevel%
 )
-
-rem set configuration for the tests
-call gen_test_config_props %plat% %conf% %vs_ver%
 exit /b 0
 
 rem copy headers to final destination directory
 :copyh
-copy ..\config.h %1config.h > nul 2>&1
-copy ..\gmp-mparam.h %1gmp-mparam.h > nul 2>&1
-copy ..\mpir.h %1mpir.h > nul 2>&1
-copy ..\mpir.h %1gmp.h > nul 2>&1
-copy ..\gmp-impl.h %1gmp-impl.h > nul 2>&1
-copy ..\longlong.h %1longlong.h > nul 2>&1
-copy ..\mpirxx.h %1mpirxx.h > nul 2>&1
-copy ..\mpirxx.h %1gmpxx.h > nul 2>&1
+copy "..\config.h"     "%~1\config.h"     > nul 2>&1
+copy "..\gmp-mparam.h" "%~1\gmp-mparam.h" > nul 2>&1
+copy "..\mpir.h"       "%~1\mpir.h"       > nul 2>&1
+copy "..\mpir.h"       "%~1\gmp.h"        > nul 2>&1
+copy "..\gmp-impl.h"   "%~1\gmp-impl.h"   > nul 2>&1
+copy "..\longlong.h"   "%~1\longlong.h"   > nul 2>&1
+copy "..\mpirxx.h"     "%~1\mpirxx.h"     > nul 2>&1
+copy "..\mpirxx.h"     "%~1\gmpxx.h"      > nul 2>&1
 exit /b 0
 
 :seterr
