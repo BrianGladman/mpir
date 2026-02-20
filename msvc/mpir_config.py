@@ -38,7 +38,9 @@ def write_f(ipath, opath):
 
 vs_version = 26
 if len(argv) > 1:
-  vs_version = int(argv[1])
+  t = int(argv[1])
+  if t:
+    vs_version = t
 
 solution_name = 'mpir.sln'
 build_dir_name = 'vs{0:d}'.format(vs_version)
@@ -52,8 +54,8 @@ write_f(join(build_root_dir, f'version_info{vs_version}.py'),
                             join(solution_dir, 'version_info.py'))
 from version_info import vs_info
 
-if len(argv) > 2:
-  vs_info['windows_sdk'] = argv[2]
+if len(argv) > 2 and argv[2] != 'default':
+    vs_info['windows_sdk'] = argv[2]
 
 # for script debugging
 debug = False
@@ -325,29 +327,37 @@ nd_32 = nd_gc + len(mpn_32)
 nd_nd = nd_32 + len(mpn_64)
 
 # now ask user which builds they wish to generate
-
-while True:
-  cnt = 0
-  for v in sorted(mpn_gc):
-    cnt += 1
-    print('{0:2d}. {1:24s}        '.format(cnt, v.replace('\\', '_')))
-  for v in sorted(mpn_32):
-    cnt += 1
-    print('{0:2d}. {1:24s} (win32)'.format(cnt, v.replace('\\', '_')))
-  for v in sorted(mpn_64):
-    cnt += 1
-    print('{0:2d}. {1:24s}   (x64)'.format(cnt, v.replace('\\', '_')))
-  fs = 'Space separated list of builds (1..{0:d}, 0 to exit)? '
-  s = input(fs.format(cnt))
-  n_list = [int(c) for c in s.split()]
-  if 0 in n_list:
-    exit()
+n_list = []
+if len(argv) == 1:
+  while True:
+    cnt = 0
+    for v in sorted(mpn_gc):
+      cnt += 1
+      print('{0:2d}. {1:24s}        '.format(cnt, v.replace('\\', '_')))
+    for v in sorted(mpn_32):
+      cnt += 1
+      print('{0:2d}. {1:24s} (win32)'.format(cnt, v.replace('\\', '_')))
+    for v in sorted(mpn_64):
+      cnt += 1
+      print('{0:2d}. {1:24s}   (x64)'.format(cnt, v.replace('\\', '_')))
+    fs = 'Space separated list of builds (1..{0:d}, 0 to exit)? '
+    s = input(fs.format(cnt))
+    n_list = [int(c) for c in s.split()]
+    if 0 in n_list:
+      exit()
+    if any(n < 1 or n > nd_nd for n in n_list):
+      print('list contains invalid build numbers')
+      sleep(2)
+    else:
+      break
+elif len(argv) == 4:
+  n_list = [int(c) for c in argv[3].split(',')]
   if any(n < 1 or n > nd_nd for n in n_list):
-    print('list contains invalid build numbers')
-    sleep(2)
-  else:
-    break
-
+     print('list contains invalid build numbers')
+     exit()
+else:
+  print('usage: mpir_config.py [vs_version] [windows_sdk] [comma separated list of builds]')
+  exit()
 # multiple builds must each have their own prebuilds
 if len(n_list) > 1:
   add_prebuild = True
