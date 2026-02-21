@@ -147,7 +147,8 @@ def linker_options(outf):
 def vcx_pre_build(name, plat, vs_info, outf):
 
   f1 = r'''    <PreBuildEvent>
-      <Command>cd ..\..\
+      <Command>mkdir "$(TargetPath)\..\mpn"
+cd ..\..\
 prebuild {0:s} {1:s} {2:s}
       </Command>
     </PreBuildEvent>
