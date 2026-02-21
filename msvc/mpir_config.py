@@ -328,7 +328,7 @@ nd_nd = nd_32 + len(mpn_64)
 
 # now ask user which builds they wish to generate
 n_list = []
-if len(argv) == 1:
+if len(argv) < 4:
   while True:
     cnt = 0
     for v in sorted(mpn_gc):
