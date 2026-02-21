@@ -11,6 +11,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <YASM_PATH Condition= "'$(YASM_PATH)' == ''">C:\Program Files\yasm\</YASM_PATH>
+    <YASM_NAME Condition= "'$(YASM_NAME)' == ''">yasm.exe</YASM_NAME>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <YASM>
@@ -18,7 +19,7 @@
       <ObjectFile>$(IntDir)%(FileName).obj</ObjectFile>
       <PreProc>0</PreProc>
       <Parser>0</Parser>
-      <CommandLineTemplate>"$(YASM_PATH.TrimEnd('\'))"\vsyasm.exe -Xvc -f $(Platform) [AllOptions] [AdditionalOptions] [Inputs]</CommandLineTemplate>
+      <CommandLineTemplate>"$(YASM_PATH.TrimEnd('\'))\$(YASM_NAME)" -Xvc -f $(Platform) [AllOptions] [AdditionalOptions] [Inputs]</CommandLineTemplate>
       <Outputs>%(ObjectFile)</Outputs>
       <ExecutionDescription>Assembling %(Filename)%(Extension) ==> $(IntDir)%(FileName).obj</ExecutionDescription>
       <ShowOnlyRuleProperties>false</ShowOnlyRuleProperties>
