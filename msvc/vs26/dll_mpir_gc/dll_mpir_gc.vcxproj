@@ -72,7 +72,8 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PreBuildEvent>
-      <Command>cd ..\..\
+      <Command>mkdir "$(TargetPath)\..\mpn"
+cd ..\..\
 prebuild gc Win32 26
       </Command>
     </PreBuildEvent>
@@ -90,7 +91,8 @@ postbuild "$(TargetPath)" 26
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PreBuildEvent>
-      <Command>cd ..\..\
+      <Command>mkdir "$(TargetPath)\..\mpn"
+cd ..\..\
 prebuild gc Win32 26
       </Command>
     </PreBuildEvent>
@@ -108,7 +110,8 @@ postbuild "$(TargetPath)" 26
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PreBuildEvent>
-      <Command>cd ..\..\
+      <Command>mkdir "$(TargetPath)\..\mpn"
+cd ..\..\
 prebuild gc x64 26
       </Command>
     </PreBuildEvent>
@@ -126,7 +129,8 @@ postbuild "$(TargetPath)" 26
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PreBuildEvent>
-      <Command>cd ..\..\
+      <Command>mkdir "$(TargetPath)\..\mpn"
+cd ..\..\
 prebuild gc x64 26
       </Command>
     </PreBuildEvent>
