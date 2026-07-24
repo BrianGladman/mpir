@@ -655,7 +655,7 @@ postbuild "$(TargetPath)" 26
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\..\vsyasm.targets" />
     </ImportGroup>
-<ItemGroup>
+  <ItemGroup>
     <None Include="..\..\..\gmp-h.in" />
-    </ItemGroup>
+  </ItemGroup>
 </Project>
