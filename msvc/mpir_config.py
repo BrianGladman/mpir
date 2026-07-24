@@ -372,6 +372,8 @@ for n in n_list:
   if 0 < n <= nd_gc:
     config = sorted(mpn_gc)[n - 1]
     mode = ('Win32', 'x64')
+    if vs_version >= 22:
+      mode += ('ARM64', )
     mpn_f = mpn_gc[config]
   elif nd_gc < n <= nd_32:
     config = sorted(mpn_32)[n - 1 - nd_gc]
@@ -529,6 +531,8 @@ for n in n_list:
 if add_cpp_lib:
   proj_name = 'mpirxx'
   mode = ('Win32', 'x64')
+  if vs_version >= 22:
+    mode += ('ARM64', )
   vcx_name = 'lib_mpir_cxx'
   vcx_path = abspath(join(solution_dir, vcx_name, vcx_name + '.vcxproj'))
   th = hf_list +  ('mpirxx.h',)

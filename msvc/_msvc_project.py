@@ -129,7 +129,7 @@ def compiler_options(plat, proj_type, is_debug, is_avx2, outf):
     s1 = 'DEBUG;WIN32;_LIB;HAVE_CONFIG_H;'
   else:
     pass
-  if plat == 'x64':
+  if plat == 'x64' or plat == 'ARM64':
     s1 = s1 + '_WIN64;'
   s1 = ('_' if is_debug else 'N') + s1
   outf.write(f1.format(s1))
@@ -253,9 +253,9 @@ def gen_vcxproj(path, root_dir, proj_name, guid, config, plat, proj_type,
     </ImportGroup>
 '''
 
-  f5 = r'''<ItemGroup>
+  f5 = r'''  <ItemGroup>
     <None Include="..\..\..\gmp-h.in" />
-    </ItemGroup>
+  </ItemGroup>
 </Project>
 '''
 
