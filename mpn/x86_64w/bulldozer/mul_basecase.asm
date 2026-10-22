@@ -1,6 +1,7 @@
-;  AMD64 mpn_mul_basecase optimised for AMD Bulldozer and Piledriver.
+;  AMD64 mpn_mul_basecase optimised for AMD Bulldoz; er and Piledriver.
 
 ;  Contributed to the GNU project by Torbjörn Granlund.
+
 ;  Copyright 2003-2005, 2007, 2008, 2011-2013 Free Software Foundation, Inc.
 
 ;  This file is part of the GNU MP Library.
