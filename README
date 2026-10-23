@@ -20,10 +20,6 @@ the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 02110-1301, USA.
 
 
-
-
-
-
 			THE MPIR LIBRARY
 
 MPIR is a fork of the GNU Multi Precision library (GMP -- see http://gmplib.org)
@@ -45,8 +41,6 @@ cases has asymptotically faster algorithms.
 MPIR is free software and may be freely copied on the terms contained in the
 files COPYING.LIB and COPYING (most of MPIR is under the former, some under
 the latter).
-
-
 
 			OVERVIEW OF MPIR
 
@@ -82,23 +76,22 @@ printed.  How to do that, as well how to build the library, is described in
 the INSTALL file in this directory.
 
 
+			MPIR STATUS
 
-			REPORTING BUGS
+MPIR is no longer supported on Gnu/Linux systems but is still maintaioned
+here on Windows.  While I am not pursuing any further development, the
+Windows x64 builds still offer good performance. The insuction manual for 
+builing MPIR (mpri.pdf) contains instructions for builing MPIR on WIndows.  
+A version of Microsoft Visual Studio is required and, if the faster assembler 
+code versions are  needed, the vsyasm version of the YASM assembler which is 
+available at https://github.com/yasm/yasm  This should be placed in the 
+"C:\Program Files\YASM" directory which should contain the following files:
 
-If you find a bug in the library, please make sure to tell us about it!
+   vsyasm.exe (optional)
+   vsyasm.props
+   vasyasm.targets
+   vsyasm.xml
+   yasm.exe
+ 
+      Dr B. R. Gladman  23 October 2026
 
-You should first check the MPIR web pages at http://www.mpir.org/. There will 
-be patches for all known serious bugs there.
-
-Report bugs to our development list: http://groups.google.com/group/mpir-devel.  
-What information is needed in a good bug report is described in the manual.  
-The same address can be used for suggesting modifications and enhancements.
-
-
-
-
-----------------
-Local variables:
-mode: text
-fill-column: 78
-End:
