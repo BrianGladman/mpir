@@ -92,6 +92,9 @@ available at https://github.com/yasm/yasm  This should be placed in the
    vasyasm.targets
    vsyasm.xml
    yasm.exe
+   
+Further details of installation options are set out in the MPIR manual at
+mpir\doc\mpir.pdf
  
       Dr B. R. Gladman  23 October 2026
 
